@@ -2509,6 +2509,10 @@ def postprocess_state(state: State):
             return predefined[link]
 
         # Otherwise search in symbols
+        if not link in state.compounds:
+            logging.warning('link \"{}\" not found in compounds'.format(link))
+            return None, '', ''
+
         found = state.compounds[link]
         return None, found.name, found.url
     i: str
@@ -3271,6 +3275,7 @@ def parse_xml(state: State, xml: str):
         # The name itself can contain templates (e.g. a specialized template),
         # so properly escape and fix spacing there as well
         compound.prefix_wbr = add_wbr(fix_type_spacing(html.escape(compound.name)))
+        compound.prefix_wbr_without_templates = compound.prefix_wbr + '::<wbr />'
 
         if compound.templates:
             compound.prefix_wbr += '&lt;'

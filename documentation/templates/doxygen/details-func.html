@@ -1,14 +1,10 @@
           <section class="m-doc-details" id="{{ func.id }}"><div>
             <h3>
-              {% if compound.templates != None or func.templates != None %}
+              {% if func.templates != None %}
               {% if func.include %}
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="{{ func.include[1] }}">{{ func.include[0] }}</a></div>
               {% endif %}
               <div class="m-doc-template">
-                {% if compound.templates != None %}
-                {% set j = joiner(', ') %}
-                template&lt;{% for t in compound.templates %}{{ j() }}{{ t.type }} {% if t.name %}{{ t.name }}{% else %}_{{ loop.index }}{% endif %}{% endfor %}&gt;
-                {% endif %}
                 {% if func.templates != None %}
                 {% set j = joiner(', ') %}
                 template&lt;{% for t in func.templates %}{{ j() }}{{ t.type }}{% if t.name %} {{ t.name }}{% endif %}{% if t.default %} = {{ t.default }}{% endif %}{% endfor %}&gt;
